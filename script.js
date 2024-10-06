@@ -33,3 +33,28 @@ function flatten(arr) {
   }
   console.log(flatten([1, 2, [3, 4]]));
   
+  //Trampoline
+  function flatten2(arr) {
+//Check if it is already flat
+let isFlat = true;
+
+    for (let i=0; i < arr.length; i++) {
+        if (Array.isArray(arr[i])) {
+            isFlat = false;
+        }
+    }
+    if (isFlat) {
+        return arr;
+    }
+    //Loop through arr; if arr[i] is flat, append to result, otherwise concatenate to result
+
+  }
+
+
+  const trampoline = (f, ...args) => {
+    let result = f(...args);
+    while (typeof result === "function") {
+      result = result();
+    }
+    return result;
+  }
