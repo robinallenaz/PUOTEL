@@ -1,3 +1,5 @@
+//PUOTEL = Practical Use Of the Event Loop
+
 //Declare a global counter variable
 
 let i = 0;
