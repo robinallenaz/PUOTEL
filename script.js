@@ -19,42 +19,53 @@ try {
 
 // Within the catch, log the error and the value of the counter variable.
 function flatten(arr) {
-    if (!Array.isArray(arr)) {
-      //base case: if it is not an array and therefore already flat
-      return arr;
-    } else {
-      let result = [];
-      for (let i = 0; i < arr.length; i++) {
-        let flattened = flatten(arr[i]);
-        result = result.concat(flattened);
-      }
-      return result;
-    }
-  }
-  console.log(flatten([1, 2, [3, 4]]));
-  
-  //Trampoline
-  function flatten2(arr) {
-//Check if it is already flat
-let isFlat = true;
-
-    for (let i=0; i < arr.length; i++) {
-        if (Array.isArray(arr[i])) {
-            isFlat = false;
-        }
-    }
-    if (isFlat) {
-        return arr;
-    }
-    //Loop through arr; if arr[i] is flat, append to result, otherwise concatenate to result
-
-  }
-
-
-  const trampoline = (f, ...args) => {
-    let result = f(...args);
-    while (typeof result === "function") {
-      result = result();
+  if (!Array.isArray(arr)) {
+    //base case: if it is not an array and therefore already flat
+    return arr;
+  } else {
+    let result = [];
+    for (let i = 0; i < arr.length; i++) {
+      let flattened = flatten(arr[i]);
+      result = result.concat(flattened);
     }
     return result;
   }
+}
+console.log(flatten([1, 2, [3, 4]]));
+
+//Trampoline
+function flatten2(arr) {
+  //Check if it is already flat
+  let isFlat = true;
+
+  for (let i = 0; i < arr.length; i++) {
+    if (Array.isArray(arr[i])) {
+      isFlat = false;
+    }
+  }
+  if (isFlat) {
+    return arr;
+  }
+  //Loop through arr; if arr[i] is flat, append to result, otherwise concatenate to result
+  let result = [];
+  for (let i = 0; i < arr.length; i++) {
+    if (Array.isArray(arr[i])) {
+      result = result.concat(arr[i]);
+    } else {
+      //When arr[i] is flat
+      result.push(arr[i]);
+    }
+  }
+  //Return a function that calls flatten2 on result
+  return () => flatten2(result);
+}
+
+const trampoline = (f, ...args) => {
+  let result = f(...args);
+  while (typeof result === "function") {
+    result = result();
+  }
+  return result;
+};
+
+console.log(trampoline(flatten2, [2, 4, 6, [1, 5, 7, [2, 9]]]));
