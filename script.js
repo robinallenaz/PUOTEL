@@ -69,3 +69,27 @@ const trampoline = (f, ...args) => {
 };
 
 console.log(trampoline(flatten2, [2, 4, 6, [1, 5, 7, [2, 9]]]));
+
+//Write a function that takes a parameter n and adds a list of all prime numbers between one and n to your HTML element.
+
+const paragraph = document.querySelector("p");
+
+function isPrime(n) {
+  //Checking primality
+  for (let i = 2; i < n; i++) {
+    if (n % i === 0) {
+      return false;
+    }
+  }
+  return true;
+}
+function primesUpTo(n) {
+  for (let i = 2; i < n; i++) {
+    if (isPrime(i)) {
+      paragraph.append(" " + i);
+      console.log(paragraph.innerText);
+    }
+  }
+}
+
+primesUpTo(10000);
