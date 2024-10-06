@@ -90,6 +90,9 @@ function primesUpTo(n) {
       console.log(paragraph.innerText);
     }
   }
+  alert("You got PUOTEL'd");
 }
 
-primesUpTo(10000);
+setTimeout(function () {
+  primesUpTo(10000);
+}, 2000);
